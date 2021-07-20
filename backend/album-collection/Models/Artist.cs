@@ -15,6 +15,7 @@ namespace album_collection.Models
         [Required(ErrorMessage = "Please Choose File To Upload")]
         public string Image { get; set; }
         public virtual List<Album> Albums { get; set; }
+        public virtual List<Song> Songs { get; set; }
         public int Age { get; set; }
         [Display(Name = "Record Label")]
         public string RecordLabel { get; set; }
@@ -39,6 +40,11 @@ namespace album_collection.Models
         public void AddAlbum(Album myAlbum)
         {
             Albums.Add(myAlbum);
+        }
+
+        public void AddSong(Song mySong)
+        {
+            Albums.Add(mySong);
         }
 
     }
