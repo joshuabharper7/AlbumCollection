@@ -44,7 +44,7 @@ namespace album_collection.Models
 
         public void AddSong(Song mySong)
         {
-            Albums.Add(mySong);
+            Songs.Add(mySong);
         }
 
     }
