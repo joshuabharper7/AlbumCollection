@@ -43,7 +43,7 @@ namespace album_collection.Models
 
 		public void AddReview(Review myReview)
 		{
-			Songs.Add(myReview);
+			Reviews.Add(myReview);
 		}
 	}
 }
