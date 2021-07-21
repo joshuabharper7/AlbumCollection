@@ -14,9 +14,10 @@ namespace album_collection.Models
 		[Display(Name = "Album Image")]
 		[Required(ErrorMessage = "Please Choose File To Upload")]
 		public string Image { get; set; }
+		public int ArtistId { get; set; }
+		public virtual Artist Artist { get; set; }
 		public virtual List<Song> Songs { get; set; }
 		public virtual List<Review> Reviews { get; set; }
-		public virtual Artist Artist { get; set; }
 		[Display(Name = "Record Label")]
 		public string RecordLabel { get; set; }
 		public string Category { get; set; }
@@ -24,17 +25,6 @@ namespace album_collection.Models
 		public Album()
 		{
 
-		}
-
-		public Album(int id, string title, string image, string recordLabel, string category)
-		{
-			Id = id;
-			Title = title;
-			Image = image;
-			RecordLabel = recordLabel;
-			Category = category;
-			Songs = new List<Song>();
-			Reviews = new List<Review>();
 		}
 
 		public void AddSong(Song mySong)
