@@ -18,6 +18,7 @@ namespace album_collection.Models
 		public virtual Artist Artist { get; set; }
 		public virtual List<Song> Songs { get; set; }
 		public virtual List<Review> Reviews { get; set; }
+		public virtual Artist Artist { get; set; }
 		[Display(Name = "Record Label")]
 		public string RecordLabel { get; set; }
 		public string Category { get; set; }
