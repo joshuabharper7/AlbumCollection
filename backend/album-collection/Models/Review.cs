@@ -14,14 +14,6 @@ namespace album_collection.Models
         public virtual Album Album { get; set; }
        
 
-        public Review(int id, int albumId, string reviewername, string content)
-        {
-            Id = id;
-            AlbumId = albumId;
-            Reviewername = reviewername;
-            Content = content;
-        }
-
         public Review()
         {
 
