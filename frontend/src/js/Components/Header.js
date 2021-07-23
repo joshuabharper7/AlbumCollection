@@ -3,7 +3,7 @@ export default function Header() {
     <nav> 
         <ul>
             <li>Home</li>
-            <li>Albums</li>
+            <li class="nav_Albums">Albums</li>
             <li>Artist</li>
             <li>Songs</li>
             <li>Reviews</li>

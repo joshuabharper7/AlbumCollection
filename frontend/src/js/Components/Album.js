@@ -4,7 +4,10 @@ export default function Album(album){
     }
 
     return `
-        <h1>${album.title}</h1>
+        <h1>${album.title}
+        <br />
+            ${album.image}
+        </h1>
         <ul>
             ${album.artists.map(artist => {
                 return `
@@ -13,6 +16,9 @@ export default function Album(album){
                     </li>
                     <li>
                         ${artist.image}
+                    </li>
+                    <li>
+                        ${album.songs}
                     </li>
                    
                 `;

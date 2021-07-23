@@ -10,12 +10,15 @@ import Review from "./Components/Review";
 import Reviews from "./Components/Reviews";
 
 const appDiv = document.getElementById("app");
-
+const albumURL = "https://localhost:44313/api/album";
+const artistURL = "https://localhost:44313/api/artist";
+const songURL = "https://localhost:44313/api/song";
+const reviewURL = "https://localhost:44313/api/review";
 
 export default() => {
     setupHeader(); 
     setupFooter();
-
+    navAlbums();
 }
 
 function setupHeader(){
@@ -30,13 +33,13 @@ function setupFooter(){
 
 
 function navAlbums() {
-    const albumsNavButton = document.querySelector(".nav_albums");
+    const albumsNavButton = document.querySelector(".nav_Albums");
     albumsNavButton.addEventListener("click", function () {
-        fetch(albumsUrl).then(response => response.json()).then(data => {
+        fetch(albumURL).then(response => response.json()).then(data => {
             
             appDiv.innerHTML = Albums(data);
             fillArtists();
-            AddTodo();
+            AddAlbum();
         });
     });
 }
@@ -66,14 +69,14 @@ function fillArtists(){
 function AddAlbum(){
     const saveAlbumButton = document.getElementById("saveAlbumBtn");
     saveAlbumButton.addEventListener('click', function(){
-        let albumName = document.getElementById("albumName").value;
-        let artistId = document.getElementById("Artists").value;
-        let albumImage = document.getElementById("albumImage");
-        let recordLabel = document.getElementById("recordLabel")
-        let albumCategory = document.getElementById("albumCategory")
+        let albumTitle = document.getElementById("albumTitle").value;
+        let artistId = document.getElementById("artists").value;
+        let albumImage = document.getElementById("albumImage").value;
+        let recordLabel = document.getElementById("recordLabel").value;
+        let albumCategory = document.getElementById("albumCategory").value;
 
         const requestBody = {
-            Title: albumName,
+            Title: albumTitle,
             ArtistId: artistId,
             Image: albumImage,
             RecordLabel: recordLabel,

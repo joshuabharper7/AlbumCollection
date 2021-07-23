@@ -15,6 +15,9 @@ export default function Albums(albums) {
     <input type="text" id="albumTitle" placeholder='Enter Album Name' />
     <select id="artists">
     </select>
+    <input type="file" id="albumImage"/>
+    <input type="text" id="recordLabel" placeholder='Enter Record Label' />
+    <input type="text" id="albumCategory" placeholder='Enter Album Category' />
     <button id="saveAlbumButton">Save Album</button>
     </section>
     `;
