@@ -38,7 +38,7 @@ namespace album_collection.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview(int id, Review review)
+        public async Task<IActionResult> PutReview(int id, [FromBody] Review review)
         {
             if (id != review.Id)
             {
