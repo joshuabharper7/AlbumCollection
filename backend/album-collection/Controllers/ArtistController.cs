@@ -41,7 +41,7 @@ namespace album_collection.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArtist(int id, Artist artist)
+        public async Task<IActionResult> PutArtist(int id, [FromBody] Artist artist)
         {
             if (id != artist.Id)
             {
