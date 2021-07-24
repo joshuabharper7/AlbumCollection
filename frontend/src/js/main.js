@@ -19,6 +19,7 @@ export default() => {
     setupHeader(); 
     setupFooter();
     navAlbums();
+    navArtists();
 }
 
 function setupHeader(){
@@ -44,8 +45,19 @@ function navAlbums() {
     });
 }
 
+function navArtists() {
+    const artistsNavButton = document.querySelector(".nav_Artists");
+    artistsNavButton.addEventListener("click", function() {
+        fetch(artistURL).then(response => response.json()).then(data => {
+
+            appDiv.innerHTML = Artists(data);
+             AddArtist();
+        })
+    });
+}
+
 function fillArtists(){
-    let dropdown = document.getElementById("Artists");
+    let dropdown = document.getElementById("artists");
     dropdown.length = 0;
 
     let defaultOption = document.createElement("option");
@@ -67,7 +79,7 @@ function fillArtists(){
 }
 
 function AddAlbum(){
-    const saveAlbumButton = document.getElementById("saveAlbumBtn");
+    const saveAlbumButton = document.getElementById("saveAlbumButton");
     saveAlbumButton.addEventListener('click', function(){
         let albumTitle = document.getElementById("albumTitle").value;
         let artistId = document.getElementById("artists").value;
@@ -84,7 +96,7 @@ function AddAlbum(){
         };
 
         if(artistId != "Select an Artist"){
-            fetch(todoURL, {
+            fetch(albumURL, {
                 method: "POST",
                 headers: {
                     "Content-Type" : "application/json"
@@ -92,8 +104,7 @@ function AddAlbum(){
                 body: JSON.stringify(requestBody)
             }).then(response => response.json())
             .then(data => {
-                appDiv.innerHTML = Artist(data);
-                
+                appDiv.innerHTML = Albums(data);
             });
         }else{
             let p = document.getElementById("responseMessage");
@@ -102,4 +113,36 @@ function AddAlbum(){
 
     });
 }
+
+ function AddArtist(){
+     const saveArtistButton = document.getElementById("saveArtistButton");
+     saveArtistButton.addEventListener('click', function(){
+         let artistName = document.getElementById("artistName").value;
+         let artistImage = document.getElementById("artistImage").value;
+         let artistAge = document.getElementById("artistAge").value;
+         let artistRecordLabel = document.getElementById("artistRecordLabel").value;
+         let artistHomeTown = document.getElementById("artistHomeTown").value;
+
+         const requestBody = {
+             Name: artistName,
+             Image: artistImage,
+             Age: artistAge,
+             RecordLabel: artistRecordLabel,
+             HomeTown: artistHomeTown
+         };
+
+         fetch(artistURL, {
+             method: "POST",
+             headers: {
+                 "Content-Type" : "application/json"
+             },
+             body: JSON.stringify(requestBody)
+         })
+         .then(response => response.json())
+         .then(data => {
+             appDiv.innerHTML = Artists(data);
+
+         });
+     });
+ }
 
