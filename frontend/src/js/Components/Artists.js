@@ -6,6 +6,8 @@ export default function Artists(artists) {
         return `
                 <li>
                     ${artists.name} - ${artists.image}
+                    <button class="artist_edit">Edit</button>
+                    <button class="artist_delete">Delete</button>
                 </li>
             `;
     }).join('')}

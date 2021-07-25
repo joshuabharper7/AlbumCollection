@@ -6,6 +6,8 @@ export default function Albums(albums) {
         return `
                 <li>
                     ${albums.title} As Performed by ${albums.artist.name}
+                    <button class="album_edit">Edit</button>
+                    <button class="album_delete">Delete</button>
                 </li>
             `;
     }).join('')}

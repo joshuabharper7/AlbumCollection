@@ -18,8 +18,11 @@ const reviewURL = "https://localhost:44313/api/review";
 export default() => {
     setupHeader(); 
     setupFooter();
+    navHome();
     navAlbums();
     navArtists();
+    navSongs();
+    navReviews();
 }
 
 function setupHeader(){
@@ -32,6 +35,12 @@ function setupFooter(){
     footerElement.innerHTML = Footer();
 }
 
+function navHome() {
+    const homeNavButton = document.querySelector(".nav_Home");
+    homeNavButton.addEventListener("click", function (){
+        appDiv.innerHTML = "";
+    });
+}
 
 function navAlbums() {
     const albumsNavButton = document.querySelector(".nav_Albums");
@@ -56,12 +65,36 @@ function navArtists() {
     });
 }
 
+function navSongs() {
+    const songsNavButton = document.querySelector(".nav_Songs");
+    songsNavButton.addEventListener("click", function() {
+        fetch(songURL).then(response => response.json()).then(data => {
+
+            appDiv.innerHTML = Songs(data);
+            fillAlbums();
+            AddSong();
+        })
+    });
+}
+
+function navReviews() {
+    const reviewsNavButton = document.querySelector(".nav_Reviews");
+    reviewsNavButton.addEventListener("click", function() {
+        fetch(reviewURL).then(response => response.json()).then(data => {
+
+            appDiv.innerHTML = Reviews(data);
+            fillAlbums();
+            AddReview();
+        })
+    });
+}
+
 function fillArtists(){
     let dropdown = document.getElementById("artists");
     dropdown.length = 0;
 
     let defaultOption = document.createElement("option");
-    defaultOption.text = "Select an Artist";
+    defaultOption.text = "Select An Artist";
     defaultOption.disabled = 'disabled';
 
     dropdown.add(defaultOption);
@@ -73,6 +106,28 @@ function fillArtists(){
             option = document.createElement('option');
             option.text = artist.name;
             option.value = artist.id;
+            dropdown.add(option);
+        });
+    });
+}
+
+function fillAlbums(){
+    let dropdown = document.getElementById("albums");
+    dropdown.length = 0;
+
+    let defaultOption = document.createElement("option");
+    defaultOption.text = "Select An Album";
+    defaultOption.disabled = 'disabled';
+
+    dropdown.add(defaultOption);
+    dropdown.selectedIndex = 0;
+
+    fetch(albumURL).then(response => response.json()).then(data => {
+        let option;
+        data.forEach(function(album){
+            option = document.createElement('option');
+            option.text = album.title;
+            option.value = album.id;
             dropdown.add(option);
         });
     });
@@ -95,7 +150,7 @@ function AddAlbum(){
             Category: albumCategory
         };
 
-        if(artistId != "Select an Artist"){
+        if(artistId != "Select An Artist"){
             fetch(albumURL, {
                 method: "POST",
                 headers: {
@@ -114,7 +169,7 @@ function AddAlbum(){
     });
 }
 
- function AddArtist(){
+function AddArtist(){
      const saveArtistButton = document.getElementById("saveArtistButton");
      saveArtistButton.addEventListener('click', function(){
          let artistName = document.getElementById("artistName").value;
@@ -145,4 +200,69 @@ function AddAlbum(){
          });
      });
  }
+
+function AddSong(){
+    const saveSongButton = document.getElementById("saveSongButton");
+    saveSongButton.addEventListener('click', function(){
+        let songTitle = document.getElementById("songTitle").value;
+        let songDuration = document.getElementById("songDuration").value;
+        let albumId = document.getElementById("albums").value;
+
+        const requestBody = {
+            Title: songTitle,
+            Duration: songDuration,
+            AlbumId: albumId
+        };
+
+        if(albumId != "Select An Album"){
+            fetch(songURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            }).then(response => response.json())
+            .then(data => {
+                appDiv.innerHTML = Songs(data);
+            });
+        }else{
+            let p = document.getElementById("responseMessage");
+            p.innerText = 'You must select an album first.';
+        }
+
+    });
+}
+
+function AddReview(){
+    const saveReviewButton = document.getElementById("saveReviewButton");
+    saveReviewButton.addEventListener('click', function(){
+        let albumId = document.getElementById("songTitle").value;
+        let reviewContent = document.getElementById("reviewContent").value;
+        let reviewerName = document.getElementById("reviewerName").value;
+
+        const requestBody = {
+            AlbumId: albumId,
+            Content: reviewContent,
+            Reviewername: reviewerName
+           
+        };
+
+        if(albumId != "Select An Album"){
+            fetch(reviewURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            }).then(response => response.json())
+            .then(data => {
+                appDiv.innerHTML = Reviews(data);
+            });
+        }else{
+            let p = document.getElementById("responseMessage");
+            p.innerText = 'You must select an album first.';
+        }
+
+    });
+}
 
