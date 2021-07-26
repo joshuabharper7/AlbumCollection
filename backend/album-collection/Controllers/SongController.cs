@@ -67,12 +67,14 @@ namespace album_collection.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Song>> PostSong([FromBody] Song song)
+        public async Task<ActionResult<IEnumerable<Song>>> PostSong([FromBody] Song song)
         {
             _db.Songs.Add(song);
             await _db.SaveChangesAsync();
 
-            return CreatedAtAction("GetSong", new { id = song.Id }, song);
+            return _db.Songs.ToList();
+
+            //return CreatedAtAction("GetSong", new { id = song.Id }, song);
         }
 
         [HttpDelete("{id}")]

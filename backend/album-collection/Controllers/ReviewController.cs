@@ -67,12 +67,14 @@ namespace album_collection.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Review>> PostReview([FromBody] Review review)
+        public async Task<ActionResult<IEnumerable<Review>>> PostReview([FromBody] Review review)
         {
             _db.Reviews.Add(review);
             await _db.SaveChangesAsync();
 
-            return CreatedAtAction("GetReview", new { id = review.Id }, review);
+            return _db.Reviews.ToList();
+
+            //return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
 
         [HttpDelete("{id}")]

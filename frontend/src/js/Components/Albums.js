@@ -2,10 +2,10 @@ export default function Albums(albums) {
     return `
     <h1>Albums List</h1>
     <ol>
-        ${albums.map(albums => {
+        ${albums.map(album => {
         return `
                 <li>
-                    ${albums.title} As Performed by ${albums.artist.name}
+                    <h4 class="artist_album" id="${album.id}">${albums.title} As Performed by ${albums.artist.name}</h4>
                     <button class="album_edit">Edit</button>
                     <button class="album_delete">Delete</button>
                 </li>

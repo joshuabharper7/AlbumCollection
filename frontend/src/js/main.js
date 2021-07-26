@@ -8,12 +8,13 @@ import Song from "./Components/Song";
 import Songs from "./Components/Songs";
 import Review from "./Components/Review";
 import Reviews from "./Components/Reviews";
+import apiAction from "./api/api-actions"
 
 const appDiv = document.getElementById("app");
-const albumURL = "https://localhost:44313/api/album";
-const artistURL = "https://localhost:44313/api/artist";
-const songURL = "https://localhost:44313/api/song";
-const reviewURL = "https://localhost:44313/api/review";
+const albumURL = "https://localhost:44313/api/album/";
+const artistURL = "https://localhost:44313/api/artist/";
+const songURL = "https://localhost:44313/api/song/";
+const reviewURL = "https://localhost:44313/api/review/";
 
 export default() => {
     setupHeader(); 
@@ -57,11 +58,10 @@ function navAlbums() {
 function navArtists() {
     const artistsNavButton = document.querySelector(".nav_Artists");
     artistsNavButton.addEventListener("click", function() {
-        fetch(artistURL).then(response => response.json()).then(data => {
-
+        apiAction.getRequest(artistURL, data => {
             appDiv.innerHTML = Artists(data);
-             AddArtist();
-        })
+            AddArtist();
+        });
     });
 }
 
@@ -149,8 +149,10 @@ function AddAlbum(){
             RecordLabel: recordLabel,
             Category: albumCategory
         };
-
+        
         if(artistId != "Select An Artist"){
+            console.log(requestBody);
+            console.log(albumURL);
             fetch(albumURL, {
                 method: "POST",
                 headers: {
@@ -160,13 +162,45 @@ function AddAlbum(){
             }).then(response => response.json())
             .then(data => {
                 appDiv.innerHTML = Albums(data);
+                console.log(data);
             });
         }else{
             let p = document.getElementById("responseMessage");
             p.innerText = 'You must select a artist first.';
         }
+        
 
     });
+}
+
+function AlbumArtists(){
+    const albumElements = document.querySelectorAll(".artist_album");
+    albumElements.forEach(element => {
+        element.addEventListener('click', function(){
+            let albumId = element.id;
+
+            apiAction.getRequest(`${albumURL}${albumId}`, data => {
+                appDiv.innerHTML = Album.DisplayAlbum(data);
+                Album.SwitchToEdit();
+                OwnerAddTodo();
+            });
+
+        });
+    });
+}
+
+function DeleteAlbum(){
+    const albumDeleteButtons = document.querySelector(".album_delete");
+    albumDeleteButtons.forEach(element => {
+        element.addEventListener('click', function(){
+            let albumId = element.parentElement.getElementsByTagName("h4")[0].id;
+
+            apiAction.deleteRequest(albumURL, albumId, data => {
+                element.parentElement.remove();
+            });
+
+        });
+    })
 }
 
 function AddArtist(){
@@ -224,6 +258,7 @@ function AddSong(){
             }).then(response => response.json())
             .then(data => {
                 appDiv.innerHTML = Songs(data);
+                fillAlbums();
             });
         }else{
             let p = document.getElementById("responseMessage");
@@ -236,7 +271,7 @@ function AddSong(){
 function AddReview(){
     const saveReviewButton = document.getElementById("saveReviewButton");
     saveReviewButton.addEventListener('click', function(){
-        let albumId = document.getElementById("songTitle").value;
+        let albumId = document.getElementById("albums").value;
         let reviewContent = document.getElementById("reviewContent").value;
         let reviewerName = document.getElementById("reviewerName").value;
 
@@ -257,6 +292,7 @@ function AddReview(){
             }).then(response => response.json())
             .then(data => {
                 appDiv.innerHTML = Reviews(data);
+                fillAlbums();
             });
         }else{
             let p = document.getElementById("responseMessage");

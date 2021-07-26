@@ -5,7 +5,7 @@ export default function Reviews(reviews) {
         ${reviews.map(reviews => {
         return `
                 <li>
-                    Review: ${reviews.content} Reviewer Name: ${reviews.reviewername} 
+                    Review: ${reviews.content} - Reviewer Name: ${reviews.reviewername} 
                     <button class="review_edit">Edit</button>
                     <button class="review_delete">Delete</button>
                 </li>

@@ -70,12 +70,14 @@ namespace album_collection.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Artist>> PostArtist([FromBody] Artist artist)
+        public async Task<ActionResult<IEnumerable<Artist>>> PostArtist([FromBody] Artist artist)
         {
             _db.Artists.Add(artist);
             await _db.SaveChangesAsync();
 
-            return CreatedAtAction("GetArtist", new { id = artist.Id }, artist);
+            return _db.Artists.ToList();
+
+            //return CreatedAtAction("GetArtist", new { id = artist.Id }, artist);
         }
 
         [HttpDelete("{id}")]
