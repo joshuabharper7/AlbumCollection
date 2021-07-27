@@ -175,7 +175,7 @@ function SwitchToEditAlbum(){
     const editButton = document.querySelectorAll(".album_edit");
     editButton.forEach(element => {
         element.addEventListener("click", function(){
-            apiAction.getRequest(albumURL + editButton.id, data => {
+            apiAction.getRequest(albumURL + element.id, data => {
                 appDiv.innerHTML = EditAlbum(data);
                 fillArtists();
                 SetupEditAlbum();
@@ -191,17 +191,17 @@ function SwitchToEditAlbum(){
     // });
     }
 
-function EditAlbum(){
+function EditAlbum(album){
     return `
     
     <h1>Edit Album</h1>
     <section class="albumForm">
-    <input type="text" id="albumTitle" placeholder='Enter Album Title' />
+    <label>Name: </label><input type="text" id="albumTitle" placeholder="Enter A Title" value="${album.title}" />
     <select id="artists">
     </select>
     <input type="file" id="albumImage"/>
-    <input type="text" id="recordLabel" placeholder='Enter Record Label' />
-    <input type="text" id="albumCategory" placeholder='Enter Album Category' />
+    <input type="text" id="recordLabel" placeholder="Enter Record Label" value="${album.recordLabel}" />
+    <input type="text" id="albumCategory" placeholder="Enter A Category" value="${album.category}" />
     <button id="saveAlbumButton">Save Album</button>
     </section>
     `;
@@ -216,7 +216,7 @@ function SetupEditAlbum(album){
             let albumImage = document.getElementById("albumImage").value;
             let recordLabel = document.getElementById("recordLabel").value;
             let albumCategory = document.getElementById("albumCategory").value;
-            let albumId = editButton.id;
+            let albumId = element.id;
                 
                  const requestBody = {
                      AlbumId: albumId,
