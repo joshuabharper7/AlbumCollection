@@ -1,6 +1,47 @@
-{/* <section class="owner_addtodo">
-    <label>Todo Name: </label>
-    <input type='text' id='todoName' Placeholder='Add a New Todo Item' />
-    <br />
-    <button class="todoAddButton" id="${owner.id}">Add Todo Item</button>
-</section> */}
+export default {
+    DisplayArtist,
+}
+
+function DisplayArtist(artist){
+    if(artist.albums == null){
+        artist.albums = [];
+    }
+
+    return `
+        <h1>${artist.name}
+        <br />
+            ${artist.image}
+        </h1>
+        <ul>
+            ${artist.albums.map(album => {
+                return `
+                    <li>
+                        ${album.title} 
+                        
+                    </li>
+                    <li>
+                        ${album.image}
+                    </li>
+                    <li>
+                        ${album.recordLabel} 
+                    </li>
+                    <li>
+                        ${album.category} 
+                    </li>
+                    
+                   
+                `;
+            }).join('')}
+        </ul>
+
+        <section class="artist_addAlbum">
+            <input type="text" id="albumTitle" placeholder='Enter Album Title' />
+            <input type="file" id="albumImage"/>
+            <input type="text" id="albumRecordLabel" placeholder='Enter Record Label' />
+            <input type="text" id="albumCategory" placeholder='Enter Album Category' />
+            <button id="saveSongButton">Add Album</button>
+        </section>
+        
+        
+    `;
+}

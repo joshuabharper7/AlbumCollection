@@ -50,6 +50,7 @@ function navAlbums() {
             
             appDiv.innerHTML = Albums(data);
             fillArtists();
+            SwitchToEditAlbum();
             AddAlbum();
         });
     });
@@ -151,8 +152,6 @@ function AddAlbum(){
         };
         
         if(artistId != "Select An Artist"){
-            console.log(requestBody);
-            console.log(albumURL);
             fetch(albumURL, {
                 method: "POST",
                 headers: {
@@ -162,7 +161,6 @@ function AddAlbum(){
             }).then(response => response.json())
             .then(data => {
                 appDiv.innerHTML = Albums(data);
-                console.log(data);
             });
         }else{
             let p = document.getElementById("responseMessage");
@@ -173,34 +171,57 @@ function AddAlbum(){
     });
 }
 
-function AlbumArtists(){
-    const albumElements = document.querySelectorAll(".artist_album");
-    albumElements.forEach(element => {
-        element.addEventListener('click', function(){
-            let albumId = element.id;
-
-            apiAction.getRequest(`${albumURL}${albumId}`, data => {
-                appDiv.innerHTML = Album.DisplayAlbum(data);
-                Album.SwitchToEdit();
-                OwnerAddTodo();
-            });
-
-        });
+function SwitchToEditAlbum(){
+    const editButton = document.querySelector(".album_edit");
+    editButton.addEventListener("click", function(){
+        apiAction.getRequest(albumURL + editButton.id, data => {
+            appDiv.innerHTML = EditAlbum(data);
+            fillArtists();
+            SetupEditAlbum();
+        })
     });
 }
 
-function DeleteAlbum(){
-    const albumDeleteButtons = document.querySelector(".album_delete");
-    albumDeleteButtons.forEach(element => {
-        element.addEventListener('click', function(){
-            let albumId = element.parentElement.getElementsByTagName("h4")[0].id;
+function EditAlbum(){
+    return `
+    
+    <h1>Edit Album</h1>
+    <section class="albumForm">
+    <input type="text" id="albumTitle" placeholder='Enter Album Title' />
+    <select id="artists">
+    </select>
+    <input type="file" id="albumImage"/>
+    <input type="text" id="recordLabel" placeholder='Enter Record Label' />
+    <input type="text" id="albumCategory" placeholder='Enter Album Category' />
+    <button id="saveAlbumButton">Save Album</button>
+    </section>
+    `;
+}
 
-            apiAction.deleteRequest(albumURL, albumId, data => {
-                element.parentElement.remove();
-            });
-
+function SetupEditAlbum(album){
+    const editButton = document.querySelector(".album_edit");
+    editButton.addEventListener("click", function(){
+        let albumTitle = document.getElementById("albumTitle").value;
+        let artistId = document.getElementById("artists").value;
+        let albumImage = document.getElementById("albumImage").value;
+        let recordLabel = document.getElementById("recordLabel").value;
+        let albumCategory = document.getElementById("albumCategory").value;
+        
+        const requestBody = {
+            Title: albumTitle,
+            ArtistId: artistId,
+            Image: albumImage,
+            RecordLabel: recordLabel,
+            Category: albumCategory
+        }
+        
+        apiAction.putRequest(albumURL, album.id, requestBody, data => {
+            appDiv.innerHTML = DisplayAlbum(data);
+            fillArtists();
+            SwitchToEditAlbum();
         });
-    })
+    });
+    
 }
 
 function AddArtist(){

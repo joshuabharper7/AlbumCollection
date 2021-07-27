@@ -37,7 +37,7 @@ function putRequest(location, id, requestBody, callback){
         },
         body: JSON.stringify(requestBody)
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(data => {
         callback(data);
     })

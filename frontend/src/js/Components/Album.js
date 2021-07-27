@@ -1,4 +1,8 @@
-export default function Album(album){
+export default {
+    DisplayAlbum,
+}
+
+function DisplayAlbum(album){
     if(album.artists == null){
         album.artists = [];
     }
@@ -13,17 +17,29 @@ export default function Album(album){
                 return `
                     <li>
                         ${artist.name}
+                        
                     </li>
                     <li>
                         ${artist.image}
                     </li>
                     <li>
-                        ${album.songs}
+                        ${album.songs} <button class="song_delete">Delete</button>
                     </li>
+                    
                    
                 `;
             }).join('')}
         </ul>
+
+        <section class="album_addSong">
+            <input type="text" id="songTitle" placeholder='Enter Song Title' />
+            <input type="text" id="songDuration" placeholder='Enter Song Duration' />
+            <select id="albums">
+            </select>
+            <button id="saveSongButton">Add Song</button>
+        </section>
+        
         
     `;
 }
+

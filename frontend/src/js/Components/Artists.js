@@ -14,7 +14,7 @@ export default function Artists(artists) {
     </ol>
 
     <section class="artistForm">
-    <input type="text" id="artistName" placeholder='Enter Artist Name' />
+    Add Artist: <input type="text" id="artistName" placeholder='Enter Artist Name' />
     <input type="file" id="artistImage"/>
     <input type="text" id="artistAge" placeholder='Enter Age' />
     <input type="text" id="artistRecordLabel" placeholder='Enter Record Label' />

@@ -14,7 +14,7 @@ export default function Songs(songs) {
     </ol>
 
     <section class="songForm">
-    <input type="text" id="songTitle" placeholder='Enter Song Title' />
+    Add Song: <input type="text" id="songTitle" placeholder='Enter Song Title' />
     <input type="text" id="songDuration" placeholder='Enter Song Duration' />
     <select id="albums">
     </select>

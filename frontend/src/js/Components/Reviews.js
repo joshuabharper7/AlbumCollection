@@ -14,7 +14,7 @@ export default function Reviews(reviews) {
     </ol>
 
     <section class="reviewForm">
-    <select id="albums">
+    Add Review: <select id="albums">
     </select>
     <input type="text" id="reviewContent" placeholder='Enter Review Here' />
     <input type="text" id="reviewerName" placeholder='Enter Your Name' />
