@@ -2,12 +2,12 @@ export default function Artists(artists) {
     return `
     <h1>Artist List</h1>
     <ol>
-        ${artists.map(artists => {
+        ${artists.map(artist => {
         return `
                 <li>
-                    ${artists.name} - ${artists.image}
-                    <button class="artist_edit">Edit</button>
-                    <button class="artist_delete">Delete</button>
+                    ${artist.name} - ${artist.image}
+                    <button class="artist_edit" id="${artist.id}">Edit</button>
+                    <button class="artist_delete" id="${artist.id}">Delete</button>
                 </li>
             `;
     }).join('')}

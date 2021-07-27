@@ -5,7 +5,7 @@ export default function Albums(albums) {
         ${albums.map(album => {
         return `
                 <li>
-                    <h4 class="artist_album">${album.title} As Performed by ${album.artist.name}</h4>
+                    <h4 class="artist_album" id="${album.id}">${album.title} As Performed by ${album.artist.name}</h4>
                     <button class="album_edit" id="${album.id}">Edit</button>
                     <button class="album_delete" id="${album.id}">Delete</button>
                 </li>
@@ -14,12 +14,17 @@ export default function Albums(albums) {
     </ol>
 
     <section class="albumForm">
-    Add Album: <input type="text" id="albumTitle" placeholder='Enter Album Name' />
-    <select id="artists">
+    <label>Add Album: </label><input type="text" id="albumTitle" placeholder='Enter Album Name' />
+    <br/>
+    <label>Artist: </label><select id="artists">
     </select>
-    <input type="file" id="albumImage"/>
-    <input type="text" id="recordLabel" placeholder='Enter Record Label' />
-    <input type="text" id="albumCategory" placeholder='Enter Album Category' />
+    <br/>
+    <label>Image: </label><input type="file" id="albumImage"/>
+    <br/>
+    <label>Record Label: </label><input type="text" id="recordLabel" placeholder='Enter Record Label' />
+    <br/>
+    <label>Category: </label><input type="text" id="albumCategory" placeholder='Enter Album Category' />
+    <br/>
     <button id="saveAlbumButton">Save Album</button>
     </section>
     `;

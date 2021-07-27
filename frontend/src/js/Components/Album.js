@@ -23,7 +23,7 @@ function DisplayAlbum(album){
                         ${artist.image}
                     </li>
                     <li>
-                        ${album.songs} <button class="song_delete">Delete</button>
+                        ${album.song.title} <button class="song_delete">Delete</button>
                     </li>
                     
                    
@@ -31,11 +31,14 @@ function DisplayAlbum(album){
             }).join('')}
         </ul>
 
-        <section class="album_addSong">
-            <input type="text" id="songTitle" placeholder='Enter Song Title' />
-            <input type="text" id="songDuration" placeholder='Enter Song Duration' />
-            <select id="albums">
+        <section class="songForm">
+            <label>Add Song: </label><input type="text" id="songTitle" placeholder='Enter Song Title' />
+            <br/>
+            <label>Song Duration: </label><input type="text" id="songDuration" placeholder='Enter Song Duration' />
+            <br/>
+            <label>Album: </label><select id="albums">
             </select>
+            <br/>
             <button id="saveSongButton">Add Song</button>
         </section>
         

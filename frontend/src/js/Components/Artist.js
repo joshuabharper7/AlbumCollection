@@ -19,15 +19,17 @@ function DisplayArtist(artist){
                         ${album.title} 
                         
                     </li>
-                    <li>
+                    <ul>
+                        <li>
                         ${album.image}
-                    </li>
-                    <li>
+                        </li>
+                        <li>
                         ${album.recordLabel} 
-                    </li>
-                    <li>
+                        </li>
+                        <li>
                         ${album.category} 
-                    </li>
+                        </li>
+                    </ul>
                     
                    
                 `;

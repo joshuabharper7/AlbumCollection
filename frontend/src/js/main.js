@@ -49,6 +49,7 @@ function navAlbums() {
         fetch(albumURL).then(response => response.json()).then(data => {
             
             appDiv.innerHTML = Albums(data);
+            AlbumPage();
             fillArtists();
             SwitchToEditAlbum();
             AddAlbum();
@@ -61,6 +62,7 @@ function navArtists() {
     artistsNavButton.addEventListener("click", function() {
         apiAction.getRequest(artistURL, data => {
             appDiv.innerHTML = Artists(data);
+            SwitchToEditArtist();
             AddArtist();
         });
     });
@@ -87,6 +89,22 @@ function navReviews() {
             fillAlbums();
             AddReview();
         })
+    });
+}
+
+function AlbumPage(){
+    const albumElements = document.querySelectorAll(".artist_album");
+    albumElements.forEach(element => {
+        element.addEventListener("click", function(){
+            let albumId = element.id;
+
+            apiAction.getRequest(`${albumURL}${albumId}`, data => {
+                appDiv.innerHTML = Album.DisplayAlbum(data);
+                fillAlbums();
+                SwitchToEditAlbum();
+                AddSong();
+            });
+        });
     });
 }
 
@@ -182,14 +200,7 @@ function SwitchToEditAlbum(){
         });
     });
 });
-    // editButton.addEventListener("click", function(){
-    //     apiAction.getRequest(albumURL + editButton.id, data => {
-    //         appDiv.innerHTML = EditAlbum(data);
-    //         fillArtists();
-    //         SetupEditAlbum();
-    //     })
-    // });
-    }
+}
 
 function EditAlbum(album){
     return `
@@ -197,16 +208,20 @@ function EditAlbum(album){
     <h1>Edit Album</h1>
     <section class="albumForm">
     <label>Name: </label><input type="text" id="albumTitle" placeholder="Enter A Title" value="${album.title}" />
-    <select id="artists">
+    <br/>
+    <label>Artist: </label><select id="artists">
     </select>
-    <input type="file" id="albumImage"/>
-    <input type="text" id="recordLabel" placeholder="Enter Record Label" value="${album.recordLabel}" />
-    <input type="text" id="albumCategory" placeholder="Enter A Category" value="${album.category}" />
+    <br/>
+    <label>Image: </label><input type="file" id="albumImage"/>
+    <br/>
+    <label>Record Label: </label><input type="text" id="recordLabel" placeholder="Enter Record Label" value="${album.recordLabel}" />
+    <br/>
+    <label>Category: </label><input type="text" id="albumCategory" placeholder="Enter A Category" value="${album.category}" />
+    <br/>
     <button class="saveAlbumButton" id="${album.id}" >Save Album</button>
     </section>
     `;
 }
-
 
 function SetupEditAlbum(album){
     const editButton = document.querySelector(".saveAlbumButton");
@@ -237,26 +252,7 @@ function SetupEditAlbum(album){
                     }); 
                     
                  });
-    // editButton.addEventListener("click", function(){
-    //     let albumTitle = document.getElementById("albumTitle").value;
-    //     let artistId = document.getElementById("artists").value;
-    //     let albumImage = document.getElementById("albumImage").value;
-    //     let recordLabel = document.getElementById("recordLabel").value;
-    //     let albumCategory = document.getElementById("albumCategory").value;
-        
-    //     const requestBody = {
-    //         Title: albumTitle,
-    //         ArtistId: artistId,
-    //         Image: albumImage,
-    //         RecordLabel: recordLabel,
-    //         Category: albumCategory
-    //     }
-        
-    //     apiAction.putRequest(albumURL, album.id, requestBody, data => {
-    //         appDiv.innerHTML = DisplayAlbum(data);
-    //         fillArtists();
-    //         SwitchToEditAlbum();
-    //     });
+
     });
     
 }
@@ -292,6 +288,71 @@ function AddArtist(){
          });
      });
  }
+
+ function SwitchToEditArtist(){
+    const editButton = document.querySelectorAll(".artist_edit");
+    editButton.forEach(element => {
+        element.addEventListener("click", function(){
+            apiAction.getRequest(artistURL + element.id, data => {
+                appDiv.innerHTML = EditArtist(data);
+                SetupEditArtist();
+        });
+    });
+});
+}
+
+function EditArtist(artist){
+    return `
+    
+    <h1>Edit Artist</h1>
+    <section class="artistForm">
+    <label>Name: </label><input type="text" id="artistName" placeholder="Enter A Name" value="${artist.name}" />
+    <br/>
+    <label>Image: </label><input type="file" id="artistImage"/>
+    <br/>
+    <label>Age: </label><input type="text" id="artistAge" placeholder='Enter Age' value="${artist.age}" />
+    <br/>
+    <label>Record Label: </label><input type="text" id="artistRecordLabel" placeholder='Enter Record Label' value="${artist.recordLabel}" />
+    <br/>
+    <label>Hometown: </label><input type="text" id="artistHomeTown" placeholder='Enter Home Town' value="${artist.homeTown}" />
+    <br/>
+    <button class="saveArtistButton" id="${artist.id}" >Save Artist</button>
+    </section>
+    `;
+}
+
+
+function SetupEditArtist(artist){
+    const editButton = document.querySelector(".saveArtistButton");
+    editButton.addEventListener("click", function(){
+            let artistName = document.getElementById("artistName").value;
+            let artistImage = document.getElementById("artistImage").value;
+            let artistAge = document.getElementById("artistAge").value;
+            let artistRecordLabel = document.getElementById("artistRecordLabel").value;
+            let artistHomeTown = document.getElementById("artistHomeTown").value;
+            let artistId = editButton.id;
+                
+                 const requestBody = {
+                     Id: artistId,
+                     Name: artistName,
+                     Image: artistImage,
+                     Age: artistAge,
+                     RecordLabel: artistRecordLabel,
+                     HomeTown: artistHomeTown
+                 }
+                
+
+                 apiAction.putRequest(artistURL, artistId, requestBody, data => {
+                    apiAction.getRequest(artistURL + artistId,data=>{
+                        appDiv.innerHTML = Artist.DisplayArtist(data);
+                        SwitchToEditArtist();
+                    }); 
+                    
+                 });
+
+    });
+    
+}
 
 function AddSong(){
     const saveSongButton = document.getElementById("saveSongButton");
