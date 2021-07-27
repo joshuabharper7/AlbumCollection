@@ -202,24 +202,25 @@ function EditAlbum(album){
     <input type="file" id="albumImage"/>
     <input type="text" id="recordLabel" placeholder="Enter Record Label" value="${album.recordLabel}" />
     <input type="text" id="albumCategory" placeholder="Enter A Category" value="${album.category}" />
-    <button id="saveAlbumButton">Save Album</button>
+    <button class="saveAlbumButton" id="${album.id}" >Save Album</button>
     </section>
     `;
 }
 
+
 function SetupEditAlbum(album){
-    const editButton = document.querySelectorAll(".album_edit");
-    editButton.forEach(element => {
-        element.addEventListener("click", function(){
+    const editButton = document.querySelector(".saveAlbumButton");
+   
+        editButton.addEventListener("click", function(){
             let albumTitle = document.getElementById("albumTitle").value;
             let artistId = document.getElementById("artists").value;
             let albumImage = document.getElementById("albumImage").value;
             let recordLabel = document.getElementById("recordLabel").value;
             let albumCategory = document.getElementById("albumCategory").value;
-            let albumId = element.id;
+            let albumId = editButton.id;
                 
                  const requestBody = {
-                     AlbumId: albumId,
+                     Id: albumId,
                      Title: albumTitle,
                      ArtistId: artistId,
                      Image: albumImage,
@@ -227,12 +228,15 @@ function SetupEditAlbum(album){
                      Category: albumCategory
                  }
                 
+
                  apiAction.putRequest(albumURL, albumId, requestBody, data => {
-                     appDiv.innerHTML = DisplayAlbum(data);
-                     fillArtists();
-                     SwitchToEditAlbum();
+                    apiAction.getRequest(albumURL + albumId,data=>{
+                        appDiv.innerHTML = Album.DisplayAlbum(data);
+                        fillArtists();
+                        SwitchToEditAlbum();
+                    }); 
+                    
                  });
-        });
     // editButton.addEventListener("click", function(){
     //     let albumTitle = document.getElementById("albumTitle").value;
     //     let artistId = document.getElementById("artists").value;

@@ -1,5 +1,5 @@
 export default {
-    DisplayAlbum,
+    DisplayAlbum
 }
 
 function DisplayAlbum(album){
