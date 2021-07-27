@@ -23,7 +23,7 @@ function DisplayAlbum(album){
                         ${artist.image}
                     </li>
                     <li>
-                        ${album.song.title} <button class="song_delete">Delete</button>
+                        ${album.Song.Title} <button class="song_delete">Delete</button>
                     </li>
                     
                    
