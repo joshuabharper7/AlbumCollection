@@ -5,9 +5,9 @@ export default function Albums(albums) {
         ${albums.map(album => {
         return `
                 <li>
-                    <h4 class="artist_album" id="${album.id}">${album.title} As Performed by ${album.artist.name}</h4>
-                    <button class="album_edit">Edit</button>
-                    <button class="album_delete">Delete</button>
+                    <h4 class="artist_album">${album.title} As Performed by ${album.artist.name}</h4>
+                    <button class="album_edit" id="${album.id}">Edit</button>
+                    <button class="album_delete" id="${album.id}">Delete</button>
                 </li>
             `;
     }).join('')}

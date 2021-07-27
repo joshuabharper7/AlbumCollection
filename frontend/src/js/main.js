@@ -172,15 +172,24 @@ function AddAlbum(){
 }
 
 function SwitchToEditAlbum(){
-    const editButton = document.querySelector(".album_edit");
-    editButton.addEventListener("click", function(){
-        apiAction.getRequest(albumURL + editButton.id, data => {
-            appDiv.innerHTML = EditAlbum(data);
-            fillArtists();
-            SetupEditAlbum();
-        })
+    const editButton = document.querySelectorAll(".album_edit");
+    editButton.forEach(element => {
+        element.addEventListener("click", function(){
+            apiAction.getRequest(albumURL + editButton.id, data => {
+                appDiv.innerHTML = EditAlbum(data);
+                fillArtists();
+                SetupEditAlbum();
+        });
     });
-}
+});
+    // editButton.addEventListener("click", function(){
+    //     apiAction.getRequest(albumURL + editButton.id, data => {
+    //         appDiv.innerHTML = EditAlbum(data);
+    //         fillArtists();
+    //         SetupEditAlbum();
+    //     })
+    // });
+    }
 
 function EditAlbum(){
     return `
@@ -199,27 +208,51 @@ function EditAlbum(){
 }
 
 function SetupEditAlbum(album){
-    const editButton = document.querySelector(".album_edit");
-    editButton.addEventListener("click", function(){
-        let albumTitle = document.getElementById("albumTitle").value;
-        let artistId = document.getElementById("artists").value;
-        let albumImage = document.getElementById("albumImage").value;
-        let recordLabel = document.getElementById("recordLabel").value;
-        let albumCategory = document.getElementById("albumCategory").value;
-        
-        const requestBody = {
-            Title: albumTitle,
-            ArtistId: artistId,
-            Image: albumImage,
-            RecordLabel: recordLabel,
-            Category: albumCategory
-        }
-        
-        apiAction.putRequest(albumURL, album.id, requestBody, data => {
-            appDiv.innerHTML = DisplayAlbum(data);
-            fillArtists();
-            SwitchToEditAlbum();
+    const editButton = document.querySelectorAll(".album_edit");
+    editButton.forEach(element => {
+        element.addEventListener("click", function(){
+            let albumTitle = document.getElementById("albumTitle").value;
+            let artistId = document.getElementById("artists").value;
+            let albumImage = document.getElementById("albumImage").value;
+            let recordLabel = document.getElementById("recordLabel").value;
+            let albumCategory = document.getElementById("albumCategory").value;
+            let albumId = editButton.id;
+                
+                 const requestBody = {
+                     AlbumId: albumId,
+                     Title: albumTitle,
+                     ArtistId: artistId,
+                     Image: albumImage,
+                     RecordLabel: recordLabel,
+                     Category: albumCategory
+                 }
+                
+                 apiAction.putRequest(albumURL, albumId, requestBody, data => {
+                     appDiv.innerHTML = DisplayAlbum(data);
+                     fillArtists();
+                     SwitchToEditAlbum();
+                 });
         });
+    // editButton.addEventListener("click", function(){
+    //     let albumTitle = document.getElementById("albumTitle").value;
+    //     let artistId = document.getElementById("artists").value;
+    //     let albumImage = document.getElementById("albumImage").value;
+    //     let recordLabel = document.getElementById("recordLabel").value;
+    //     let albumCategory = document.getElementById("albumCategory").value;
+        
+    //     const requestBody = {
+    //         Title: albumTitle,
+    //         ArtistId: artistId,
+    //         Image: albumImage,
+    //         RecordLabel: recordLabel,
+    //         Category: albumCategory
+    //     }
+        
+    //     apiAction.putRequest(albumURL, album.id, requestBody, data => {
+    //         appDiv.innerHTML = DisplayAlbum(data);
+    //         fillArtists();
+    //         SwitchToEditAlbum();
+    //     });
     });
     
 }
