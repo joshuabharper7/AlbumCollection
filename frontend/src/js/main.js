@@ -224,9 +224,9 @@ function EditAlbum(album){
 }
 
 function SetupEditAlbum(album){
-    const editButton = document.querySelector(".saveAlbumButton");
+    const saveButton = document.querySelector(".saveAlbumButton");
    
-        editButton.addEventListener("click", function(){
+        saveButton.addEventListener("click", function(){
             let albumTitle = document.getElementById("albumTitle").value;
             let artistId = document.getElementById("artists").value;
             let albumImage = document.getElementById("albumImage").value;
@@ -323,8 +323,8 @@ function EditArtist(artist){
 
 
 function SetupEditArtist(artist){
-    const editButton = document.querySelector(".saveArtistButton");
-    editButton.addEventListener("click", function(){
+    const saveButton = document.querySelector(".saveArtistButton");
+    saveButton.addEventListener("click", function(){
             let artistName = document.getElementById("artistName").value;
             let artistImage = document.getElementById("artistImage").value;
             let artistAge = document.getElementById("artistAge").value;
