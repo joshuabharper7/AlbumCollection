@@ -22,18 +22,81 @@ namespace album_collection.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Artist> GetArtists()
+        public async Task<ActionResult<IEnumerable<Artist>>> GetArtists()
         {
-            return _db.Artists.ToList();
+            return await _db.Artists.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public Artist GetArtistById(int id)
+        public async Task<ActionResult<Artist>> GetArtistById(int id)
         {
-            return _db.Artists.Find(id);
+            var artist = await _db.Artists.FindAsync(id);
+
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            return artist;
         }
 
-        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutArtist(int id, [FromBody] Artist artist)
+        {
+            if (id != artist.Id)
+            {
+                return BadRequest();
+            }
 
+            _db.Entry(artist).State = EntityState.Modified;
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ArtistExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<Artist>>> PostArtist([FromBody] Artist artist)
+        {
+            _db.Artists.Add(artist);
+            await _db.SaveChangesAsync();
+
+            return _db.Artists.ToList();
+
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteArtist(int id)
+        {
+            var artist = await _db.Artists.FindAsync(id);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            _db.Artists.Remove(artist);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool ArtistExists(int id)
+        {
+            return _db.Artists.Any(e => e.Id == id);
+        }
     }
 }

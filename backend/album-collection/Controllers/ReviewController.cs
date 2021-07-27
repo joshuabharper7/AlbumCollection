@@ -1,6 +1,7 @@
 ﻿using album_collection.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +20,80 @@ namespace album_collection.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Review> GetReviews()
+        public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
         {
-            return _db.Reviews.ToList();
+            return await _db.Reviews.ToListAsync();
         }
         [HttpGet("(id)")]
-        public Review GetReviewById(int id)
+        public async Task<ActionResult<Review>> GetReview(int id)
         {
-            return _db.Reviews.Find(id);
+            var review = await _db.Reviews.FindAsync(id);
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return review;
         }
-        
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutReview(int id, [FromBody] Review review)
+        {
+            if (id != review.Id)
+            {
+                return BadRequest();
+            }
+
+            _db.Entry(review).State = EntityState.Modified;
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReviewExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<Review>>> PostReview([FromBody] Review review)
+        {
+            _db.Reviews.Add(review);
+            await _db.SaveChangesAsync();
+
+            return _db.Reviews.ToList();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteReview(int id)
+        {
+            var review = await _db.Reviews.FindAsync(id);
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            _db.Reviews.Remove(review);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool ReviewExists(int id)
+        {
+            return _db.Reviews.Any(e => e.Id == id);
+        }
+
     }
 }
