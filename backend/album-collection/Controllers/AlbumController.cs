@@ -40,7 +40,7 @@ namespace album_collection.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAlbum(int id, [FromBody] Album album)
         {
-            if(id != album.Id)
+                if(id != album.Id)
             {
                 return BadRequest();
             }
