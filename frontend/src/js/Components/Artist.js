@@ -12,6 +12,19 @@ function DisplayArtist(artist){
         <br />
             ${artist.image}
         </h1>
+
+        <section class="artist_addAlbum">
+            <label>Title: </label><input type="text" id="albumTitle" placeholder='Enter Album Title' />
+            <br/>
+            <label>Image: </label><input type="file" id="albumImage"/>
+            <br/>
+            <label>Record Label: </label><input type="text" id="albumRecordLabel" placeholder='Enter Record Label' />
+            <br/>
+            <label>Category: </label><input type="text" id="albumCategory" placeholder='Enter Album Category' />
+            <br/>
+            <button id="saveSongButton">Add Album</button>
+        </section>
+
         <ul>
             ${artist.albums.map(album => {
                 return `
@@ -36,13 +49,7 @@ function DisplayArtist(artist){
             }).join('')}
         </ul>
 
-        <section class="artist_addAlbum">
-            <input type="text" id="albumTitle" placeholder='Enter Album Title' />
-            <input type="file" id="albumImage"/>
-            <input type="text" id="albumRecordLabel" placeholder='Enter Record Label' />
-            <input type="text" id="albumCategory" placeholder='Enter Album Category' />
-            <button id="saveSongButton">Add Album</button>
-        </section>
+        
         
         
     `;

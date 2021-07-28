@@ -1,23 +1,26 @@
 export default function Songs(songs) {
     return `
-    <h1>Song List</h1>
-    <ol>
-        ${songs.map(songs => {
+    <h1>Songs List</h1>
+    <ul>
+        ${songs.map(song => {
         return `
                 <li>
-                    Title: ${songs.title} Duration: ${songs.duration} 
-                    <button class="song_edit">Edit</button>
-                    <button class="song_delete">Delete</button>
+                    <h4 class="song_name" id="${song.id}">Title: ${song.title}</h4> 
+                    <button class="song_edit" id="${song.id}">Edit</button>
+                    <button class="song_delete" id="${song.id}">Delete</button>
                 </li>
             `;
     }).join('')}
-    </ol>
+    </ul>
 
     <section class="songForm">
-    Add Song: <input type="text" id="songTitle" placeholder='Enter Song Title' />
-    <input type="text" id="songDuration" placeholder='Enter Song Duration' />
-    <select id="albums">
+    <label>Add Song: </label><input type="text" id="songTitle" placeholder='Enter Song Title' />
+    <br/>
+    <label>Duration: </label><input type="text" id="songDuration" placeholder='Enter Song Duration' />
+    <br/>
+    <label>Album: </label><select id="albums">
     </select>
+    <br/>
     <button id="saveSongButton">Add Song</button>
     </section>
     `;

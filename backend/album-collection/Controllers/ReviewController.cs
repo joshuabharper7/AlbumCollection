@@ -24,7 +24,7 @@ namespace album_collection.Controllers
         {
             return await _db.Reviews.ToListAsync();
         }
-        [HttpGet("(id)")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Review>> GetReview(int id)
         {
             var review = await _db.Reviews.FindAsync(id);

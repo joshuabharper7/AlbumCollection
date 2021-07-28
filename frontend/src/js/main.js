@@ -52,6 +52,7 @@ function navAlbums() {
             AlbumPage();
             fillArtists();
             SwitchToEditAlbum();
+            DeleteAlbum();
             AddAlbum();
         });
     });
@@ -62,7 +63,9 @@ function navArtists() {
     artistsNavButton.addEventListener("click", function() {
         apiAction.getRequest(artistURL, data => {
             appDiv.innerHTML = Artists(data);
+            ArtistPage();
             SwitchToEditArtist();
+            DeleteArtist();
             AddArtist();
         });
     });
@@ -74,7 +77,10 @@ function navSongs() {
         fetch(songURL).then(response => response.json()).then(data => {
 
             appDiv.innerHTML = Songs(data);
+            SongPage();
             fillAlbums();
+            SwitchToEditSong();
+            DeleteSong();
             AddSong();
         })
     });
@@ -86,9 +92,12 @@ function navReviews() {
         fetch(reviewURL).then(response => response.json()).then(data => {
 
             appDiv.innerHTML = Reviews(data);
+            ReviewPage();
             fillAlbums();
+            SwitchToEditReview();
+            DeleteReview();
             AddReview();
-        })
+        });
     });
 }
 
@@ -102,13 +111,58 @@ function AlbumPage(){
                 appDiv.innerHTML = Album.DisplayAlbum(data);
                 fillAlbums();
                 SwitchToEditAlbum();
+                AddAlbum();
+            });
+        });
+    });
+}
+
+function ArtistPage(){
+    const artistElements = document.querySelectorAll(".artist_name");
+    artistElements.forEach(element => {
+        element.addEventListener("click", function(){
+            let artistId = element.id;
+
+            apiAction.getRequest(`${artistURL}${artistId}`, data => {
+                appDiv.innerHTML = Artist.DisplayArtist(data);
+                SwitchToEditArtist();
                 AddSong();
             });
         });
     });
 }
 
-function fillArtists(){
+function SongPage(){
+    const songElements = document.querySelectorAll(".song_name");
+    songElements.forEach(element => {
+        element.addEventListener("click", function(){
+            let songId = element.id;
+
+            apiAction.getRequest(`${songURL}${songId}`, data => {
+                appDiv.innerHTML = Song.DisplaySong(data);
+                fillAlbums();
+                SwitchToEditSong();
+            });
+        });
+    });
+}
+
+function ReviewPage(){
+    const reviewElements = document.querySelectorAll(".review_name");
+    reviewElements.forEach(element => {
+        element.addEventListener("click", function(){
+            let reviewId = element.id;
+
+            apiAction.getRequest(`${reviewURL}${reviewId}`, data => {
+                appDiv.innerHTML = Review.DisplayReview(data);
+                fillAlbums();
+                SwitchToEditReview();
+            });
+        });
+    });
+}
+
+function fillArtists(artistId){
     let dropdown = document.getElementById("artists");
     dropdown.length = 0;
 
@@ -123,6 +177,9 @@ function fillArtists(){
         let option;
         data.forEach(function(artist){
             option = document.createElement('option');
+            if(artistId == artist.id){
+                option.selected = "selected";
+            }
             option.text = artist.name;
             option.value = artist.id;
             dropdown.add(option);
@@ -130,7 +187,7 @@ function fillArtists(){
     });
 }
 
-function fillAlbums(){
+function fillAlbums(albumId){
     let dropdown = document.getElementById("albums");
     dropdown.length = 0;
 
@@ -144,7 +201,11 @@ function fillAlbums(){
     fetch(albumURL).then(response => response.json()).then(data => {
         let option;
         data.forEach(function(album){
+            
             option = document.createElement('option');
+            if(albumId == album.id){
+                option.selected = "selected";
+            }
             option.text = album.title;
             option.value = album.id;
             dropdown.add(option);
@@ -179,6 +240,11 @@ function AddAlbum(){
             }).then(response => response.json())
             .then(data => {
                 appDiv.innerHTML = Albums(data);
+                DeleteAlbum();
+                AddAlbum();
+                fillArtists();
+                SwitchToEditAlbum();
+                AlbumPage();
             });
         }else{
             let p = document.getElementById("responseMessage");
@@ -195,8 +261,9 @@ function SwitchToEditAlbum(){
         element.addEventListener("click", function(){
             apiAction.getRequest(albumURL + element.id, data => {
                 appDiv.innerHTML = EditAlbum(data);
-                fillArtists();
+                fillArtists(data.artist.id);
                 SetupEditAlbum();
+                AlbumPage();
         });
     });
 });
@@ -218,7 +285,7 @@ function EditAlbum(album){
     <br/>
     <label>Category: </label><input type="text" id="albumCategory" placeholder="Enter A Category" value="${album.category}" />
     <br/>
-    <button class="saveAlbumButton" id="${album.id}" >Save Album</button>
+    <button class="saveAlbumButton" id="${album.id}" >Update Album</button>
     </section>
     `;
 }
@@ -232,7 +299,7 @@ function SetupEditAlbum(album){
             let albumImage = document.getElementById("albumImage").value;
             let recordLabel = document.getElementById("recordLabel").value;
             let albumCategory = document.getElementById("albumCategory").value;
-            let albumId = editButton.id;
+            let albumId = saveButton.id;
                 
                  const requestBody = {
                      Id: albumId,
@@ -257,6 +324,24 @@ function SetupEditAlbum(album){
     
 }
 
+function DeleteAlbum(){
+    const albumDeleteButtons = document.querySelectorAll(".album_delete");
+    albumDeleteButtons.forEach(element => {
+        element.addEventListener("click", function(){
+            let albumId = element.parentElement.getElementsByTagName("h4")[0].id;
+
+            apiAction.deleteRequest(albumURL, albumId, data => {
+                element.parentElement.remove();
+                DeleteAlbum();
+                AddAlbum();
+                fillArtists();
+                SwitchToEditAlbum();
+                AlbumPage();
+            });
+        });
+    });
+}
+
 function AddArtist(){
      const saveArtistButton = document.getElementById("saveArtistButton");
      saveArtistButton.addEventListener('click', function(){
@@ -268,7 +353,7 @@ function AddArtist(){
 
          const requestBody = {
              Name: artistName,
-             Image: "pic234.jpeg",
+             Image: artistImage,
              Age: artistAge,
              RecordLabel: artistRecordLabel,
              HomeTown: artistHomeTown
@@ -285,7 +370,10 @@ function AddArtist(){
          .then(response => response.json())
          .then(data => {
              appDiv.innerHTML = Artists(data);
-
+             DeleteArtist();
+             AddArtist();
+             SwitchToEditArtist();
+             ArtistPage();
          });
      });
  }
@@ -297,6 +385,7 @@ function AddArtist(){
             apiAction.getRequest(artistURL + element.id, data => {
                 appDiv.innerHTML = EditArtist(data);
                 SetupEditArtist();
+                ArtistPage();
         });
     });
 });
@@ -317,7 +406,7 @@ function EditArtist(artist){
     <br/>
     <label>Hometown: </label><input type="text" id="artistHomeTown" placeholder='Enter Home Town' value="${artist.homeTown}" />
     <br/>
-    <button class="saveArtistButton" id="${artist.id}" >Save Artist</button>
+    <button class="saveArtistButton" id="${artist.id}" >Update Artist</button>
     </section>
     `;
 }
@@ -331,7 +420,7 @@ function SetupEditArtist(artist){
             let artistAge = document.getElementById("artistAge").value;
             let artistRecordLabel = document.getElementById("artistRecordLabel").value;
             let artistHomeTown = document.getElementById("artistHomeTown").value;
-            let artistId = editButton.id;
+            let artistId = saveButton.id;
                 
                  const requestBody = {
                      Id: artistId,
@@ -353,6 +442,23 @@ function SetupEditArtist(artist){
 
     });
     
+}
+
+function DeleteArtist(){
+    const artistDeleteButtons = document.querySelectorAll(".artist_delete");
+    artistDeleteButtons.forEach(element => {
+        element.addEventListener("click", function(){
+            let artistId = element.parentElement.getElementsByTagName("h4")[0].id;
+
+            apiAction.deleteRequest(artistURL, artistId, data => {
+                element.parentElement.remove();
+                DeleteArtist();
+                AddArtist();
+                SwitchToEditArtist();
+                ArtistPage();
+            });
+        });
+    });
 }
 
 function AddSong(){
@@ -379,12 +485,95 @@ function AddSong(){
             .then(data => {
                 appDiv.innerHTML = Songs(data);
                 fillAlbums();
+                AddSong();
+                DeleteSong();
+                SwitchToEditSong();
+                SongPage();
             });
         }else{
             let p = document.getElementById("responseMessage");
             p.innerText = 'You must select an album first.';
         }
 
+    });
+}
+
+function SwitchToEditSong(){
+    const editButton = document.querySelectorAll(".song_edit");
+    editButton.forEach(element => {
+        element.addEventListener("click", function(){
+            apiAction.getRequest(songURL + element.id, data => {
+                appDiv.innerHTML = EditSong(data);
+                fillAlbums(data.album.id);
+                SetupEditSong();
+                SongPage();
+        });
+    });
+});
+}
+
+function EditSong(song){
+    return `
+    
+    <h1>Edit Song</h1>
+    <section class="songForm">
+    <label>Name: </label><input type="text" id="songTitle" placeholder="Enter A Title" value="${song.title}" />
+    <br/>
+    <label>Duration: </label><input type="text" id="songDuration" placeholder='Enter Duration' value="${song.duration}" />
+    <br/>
+    <select id="albums">
+    </select>
+    <br/>
+    <button class="saveSongButton" id="${song.id}" >Update Song</button>
+    </section>
+    `;
+}
+
+
+function SetupEditSong(song){
+    const saveButton = document.querySelector(".saveSongButton");
+    saveButton.addEventListener("click", function(){
+            let songTitle = document.getElementById("songTitle").value;
+            let songDuration = document.getElementById("songDuration").value;
+            let songAlbum = document.getElementById("albums").value;
+            let songId = saveButton.id;
+                
+                 const requestBody = {
+                     Id: songId,
+                     Title: songTitle,
+                     Duration: songDuration,
+                     AlbumId: songAlbum
+                 }
+                
+
+                 apiAction.putRequest(songURL, songId, requestBody, data => {
+                    apiAction.getRequest(songURL + songId, data => {
+                        appDiv.innerHTML = Song.DisplaySong(data);
+                        fillAlbums();
+                        SwitchToEditSong();
+                    }); 
+                    
+                 });
+
+    });
+    
+}
+
+function DeleteSong(){
+    const songDeleteButtons = document.querySelectorAll(".song_delete");
+    songDeleteButtons.forEach(element => {
+        element.addEventListener("click", function(){
+            let songId = element.parentElement.getElementsByTagName("h4")[0].id;
+
+            apiAction.deleteRequest(songURL, songId, data => {
+                element.parentElement.remove();
+                fillAlbums();
+                AddSong();
+                DeleteSong();
+                SwitchToEditSong();
+                SongPage();
+            });
+        });
     });
 }
 
@@ -413,12 +602,95 @@ function AddReview(){
             .then(data => {
                 appDiv.innerHTML = Reviews(data);
                 fillAlbums();
+                AddReview();
+                DeleteReview();
+                SwitchToEditReview();
+                ReviewPage();
             });
         }else{
             let p = document.getElementById("responseMessage");
             p.innerText = 'You must select an album first.';
         }
 
+    });
+}
+
+function SwitchToEditReview(){
+    const editButton = document.querySelectorAll(".review_edit");
+    editButton.forEach(element => {
+        element.addEventListener("click", function(){
+            apiAction.getRequest(reviewURL + element.id, data => {
+                appDiv.innerHTML = EditReview(data);
+                fillAlbums(data.album.id);
+                SetupEditReview();
+                ReviewPage();
+        });
+    });
+});
+}
+
+function EditReview(review){
+    return `
+    
+    <h1>Edit Review</h1>
+    <section class="reviewForm">
+    <label>Posted By: </label><input type="text" id="reviewerName" placeholder="Enter A Name" value="${review.reviewername}" />
+    <br/>
+    <label>Content: </label><input type="text" id="reviewContent" placeholder='Enter Review Here' value="${review.content}" />
+    <br/>
+    <select id="albums">
+    </select>
+    <br/>
+    <button class="saveReviewButton" id="${review.id}" >Update Review</button>
+    </section>
+    `;
+}
+
+
+function SetupEditReview(review){
+    const saveButton = document.querySelector(".saveReviewButton");
+    saveButton.addEventListener("click", function(){
+            let reviewerName = document.getElementById("reviewerName").value;
+            let reviewContent = document.getElementById("reviewContent").value;
+            let reviewAlbum = document.getElementById("albums").value;
+            let reviewId = saveButton.id;
+                
+                 const requestBody = {
+                     Id: reviewId,
+                     Reviewername: reviewerName,
+                     Content: reviewContent,
+                     AlbumId: reviewAlbum
+                 }
+                
+
+                 apiAction.putRequest(reviewURL, reviewId, requestBody, data => {
+                    apiAction.getRequest(reviewURL + reviewId, data => {
+                        appDiv.innerHTML = Review.DisplayReview(data);
+                        fillAlbums();
+                        SwitchToEditReview();
+                    }); 
+                    
+                 });
+
+    });
+    
+}
+
+function DeleteReview(){
+    const reviewDeleteButtons = document.querySelectorAll(".review_delete");
+    reviewDeleteButtons.forEach(element => {
+        element.addEventListener("click", function(){
+            let reviewId = element.parentElement.getElementsByTagName("h4")[0].id;
+
+            apiAction.deleteRequest(reviewURL, reviewId, data => {
+                element.parentElement.remove();
+                fillAlbums();
+                AddReview();
+                DeleteReview();
+                SwitchToEditReview();
+                ReviewPage();
+            });
+        });
     });
 }
 

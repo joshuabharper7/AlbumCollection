@@ -12,28 +12,15 @@ function DisplayAlbum(album){
         <br />
             ${album.image}
         </h1>
+        <h4>${album.artist.name}</h4>
         <ul>
-            ${album.artists.map(artist => {
+            ${album.songs.map(song => {
                 return `
                     <li>
-                        ${artist.name}
+                        ${song.title}
                         
                     </li>
-                    <li>
-                        ${artist.image}
-                    </li>
-                    <ul>
-                        ${album.songs.map(song => {
-                            return`
-                            <li>
-                                ${album.song.title} <button class="song_delete">Delete</button>
-                            </li>
-                            `;
-                        }).join('')}
-                        
-                    </ul>
                     
-                   
                 `;
             }).join('')}
         </ul>

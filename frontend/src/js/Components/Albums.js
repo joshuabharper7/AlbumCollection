@@ -14,7 +14,7 @@ export default function Albums(albums) {
     <br/>
     <label>Category: </label><input type="text" id="albumCategory" placeholder='Enter Album Category' />
     <br/>
-    <button id="saveAlbumButton">Save Album</button>
+    <button id="saveAlbumButton">Add Album</button>
     </section>
 
     <ol>

@@ -1,24 +1,26 @@
 export default function Reviews(reviews) {
     return `
     <h1>List of reviews</h1>
-    <ol>
-        ${reviews.map(reviews => {
+    <ul>
+        ${reviews.map(review => {
         return `
                 <li>
-                    Review: ${reviews.content} - Reviewer Name: ${reviews.reviewername} 
-                    <button class="review_edit">Edit</button>
-                    <button class="review_delete">Delete</button>
+                    <h4 class="review_name" id="${review.id}">Posted By: ${review.reviewername}</h4> 
+                    <button class="review_edit" id="${review.id}">Edit</button>
+                    <button class="review_delete" id="${review.id}">Delete</button>
                 </li>
             `;
     }).join('')}
-    </ol>
+    </ul>
 
     <section class="reviewForm">
-    Add Review: <select id="albums">
+    <label>Add Review: </label><select id="albums">
     </select>
-    <input type="text" id="reviewContent" placeholder='Enter Review Here' />
-    <input type="text" id="reviewerName" placeholder='Enter Your Name' />
-    
+    <br/>
+    <label>Content: </label><input type="text" id="reviewContent" placeholder='Enter Review Here' />
+    <br/>
+    <label>Name: </label><input type="text" id="reviewerName" placeholder='Enter Your Name' />
+    <br/>
     <button id="saveReviewButton">Add Review</button>
     </section>
     `;
