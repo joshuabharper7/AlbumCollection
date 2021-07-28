@@ -22,9 +22,16 @@ function DisplayAlbum(album){
                     <li>
                         ${artist.image}
                     </li>
-                    <li>
-                        ${album.Song.Title} <button class="song_delete">Delete</button>
-                    </li>
+                    <ul>
+                        ${album.songs.map(song => {
+                            return`
+                            <li>
+                                ${album.song.title} <button class="song_delete">Delete</button>
+                            </li>
+                            `;
+                        }).join('')}
+                        
+                    </ul>
                     
                    
                 `;
