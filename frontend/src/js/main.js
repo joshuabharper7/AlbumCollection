@@ -268,11 +268,12 @@ function AddArtist(){
 
          const requestBody = {
              Name: artistName,
-             Image: artistImage,
+             Image: "pic234.jpeg",
              Age: artistAge,
              RecordLabel: artistRecordLabel,
              HomeTown: artistHomeTown
          };
+         console.log(requestBody);
 
          fetch(artistURL, {
              method: "POST",
