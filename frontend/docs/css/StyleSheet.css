@@ -1,0 +1,46 @@
+body{
+    background-color: rgba(236, 11, 11, 0.74);
+}
+
+nav{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color:rgb(236, 229, 211);
+    list-style-type: none;
+    text-shadow: 2px 2px #332020;
+    font-size: 25px;
+    
+    
+  
+    
+    
+}
+nav:hover {
+    cursor: pointer;
+}
+
+
+ul, li {
+    list-style-type: none;
+    display:inline;
+    padding-right: 15px;
+}
+
+#navstyle{
+    padding-bottom: 15px;
+}
+
+h1{
+    font-family: "Sofia", sans-serif;
+    font-size: 40px;
+    text-shadow: 2px 2px #e9d6d6;
+    margin-left: 20px;
+}
+
+h4{
+    color:ghostwhite;
+    font-family: "Apple Chancery", cursive;
+    font-weight: 900;
+    -webkit-text-stroke-width: .60px;
+    -webkit-text-stroke-color: rgb(10, 9, 9);
+    font-size: 17px;
+}

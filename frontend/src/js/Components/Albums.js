@@ -1,6 +1,6 @@
 export default function Albums(albums) {
     return `
-    <h1>Albums List</h1>
+    <h1 class="font-effect-fire">Albums List</h1>
 
     <section class="albumForm">
     <label>Add Album: </label><input type="text" id="albumTitle" placeholder='Enter Album Name' />

@@ -1,6 +1,6 @@
 export default function Artists(artists) {
     return `
-    <h1>Artist List</h1>
+    <h1 class="font-effect-fire">Artist List</h1>
     <ol>
         ${artists.map(artist => {
         return `

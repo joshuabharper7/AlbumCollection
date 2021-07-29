@@ -1,6 +1,6 @@
 export default function Songs(songs) {
     return `
-    <h1>Songs List</h1>
+    <h1 class="font-effect-fire">Songs List</h1>
     <ul>
         ${songs.map(song => {
         return `

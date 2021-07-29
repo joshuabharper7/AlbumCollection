@@ -1,6 +1,6 @@
 export default function Reviews(reviews) {
     return `
-    <h1>List of reviews</h1>
+    <h1 class="font-effect-fire">List of reviews</h1>
     <ul>
         ${reviews.map(review => {
         return `
