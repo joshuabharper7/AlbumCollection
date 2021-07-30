@@ -24,6 +24,7 @@ export default function Artists(artists) {
     <br/>
     <label>Home Town: </label><input type="text" id="artistHomeTown" placeholder='Enter Home Town' />
     <br/>
+    <br/>
     <button id="saveArtistButton">Add Artist</button>
     </section>
     `;

@@ -2,20 +2,7 @@ export default function Albums(albums) {
     return `
     <h1 class="font-effect-fire">Albums List</h1>
 
-    <section class="albumForm">
-    <label>Add Album: </label><input type="text" id="albumTitle" placeholder='Enter Album Name' />
-    <br/>
-    <label>Artist: </label><select id="artists">
-    </select>
-    <br/>
-    <label>Image: </label><input type="file" id="albumImage"/>
-    <br/>
-    <label>Record Label: </label><input type="text" id="recordLabel" placeholder='Enter Record Label' />
-    <br/>
-    <label>Category: </label><input type="text" id="albumCategory" placeholder='Enter Album Category' />
-    <br/>
-    <button id="saveAlbumButton">Add Album</button>
-    </section>
+    
 
     <ol>
         ${albums.map(album => {
@@ -31,6 +18,22 @@ export default function Albums(albums) {
             `;
     }).join('')}
     </ol>
+
+    <section class="albumForm">
+    <label>Add Album: </label><input type="text" id="albumTitle" placeholder='Enter Album Name' />
+    <br/>
+    <label>Artist: </label><select id="artists">
+    </select>
+    <br/>
+    <label>Image: </label><input type="file" id="albumImage"/>
+    <br/>
+    <label>Record Label: </label><input type="text" id="recordLabel" placeholder='Enter Record Label' />
+    <br/>
+    <label>Category: </label><input type="text" id="albumCategory" placeholder='Enter Album Category' />
+    <br/>
+    <br/>
+    <button id="saveAlbumButton">Add Album</button>
+    </section>
 
     
     `;

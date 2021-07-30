@@ -21,6 +21,7 @@ export default function Songs(songs) {
     <label>Album: </label><select id="albums">
     </select>
     <br/>
+    <br/>
     <button id="saveSongButton">Add Song</button>
     </section>
     `;

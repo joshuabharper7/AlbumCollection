@@ -44,3 +44,8 @@ h4{
     -webkit-text-stroke-color: rgb(10, 9, 9);
     font-size: 17px;
 }
+
+.footer{
+    text-align: center;
+    color: white;
+}

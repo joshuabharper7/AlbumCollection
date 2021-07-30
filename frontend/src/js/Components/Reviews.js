@@ -21,6 +21,7 @@ export default function Reviews(reviews) {
     <br/>
     <label>Name: </label><input type="text" id="reviewerName" placeholder='Enter Your Name' />
     <br/>
+    <br/>
     <button id="saveReviewButton">Add Review</button>
     </section>
     `;
