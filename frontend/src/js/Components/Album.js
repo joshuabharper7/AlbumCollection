@@ -12,18 +12,18 @@ function DisplayAlbum(album){
         <br />
             ${album.image}
         </h1>
-        <h4>${album.artist.name}</h4>
-        <ul>
+        <h4 class="artistName">${album.artist.name}</h4>
+        <ol class="songInfo">
             ${album.songs.map(song => {
                 return `
-                    <li>
+                    <li class="songName">
                         ${song.title}
                         
                     </li>
                     
                 `;
             }).join('')}
-        </ul>
+        </ol>
 
         <section class="songForm">
             <label>Add Song: </label><input type="text" id="songTitle" placeholder='Enter Song Title' />

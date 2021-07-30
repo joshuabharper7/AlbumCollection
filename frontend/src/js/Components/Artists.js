@@ -1,6 +1,6 @@
 export default function Artists(artists) {
     return `
-    <h1>Artist List</h1>
+    <h1 class="font-effect-fire">Artist List</h1>
     <ol>
         ${artists.map(artist => {
         return `
@@ -23,6 +23,7 @@ export default function Artists(artists) {
     <label>Record Label: </label><input type="text" id="artistRecordLabel" placeholder='Enter Record Label' />
     <br/>
     <label>Home Town: </label><input type="text" id="artistHomeTown" placeholder='Enter Home Town' />
+    <br/>
     <br/>
     <button id="saveArtistButton">Add Artist</button>
     </section>

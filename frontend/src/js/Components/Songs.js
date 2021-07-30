@@ -1,17 +1,17 @@
 export default function Songs(songs) {
     return `
-    <h1>Songs List</h1>
-    <ul>
+    <h1 class="font-effect-fire">Songs List</h1>
+    <ol>
         ${songs.map(song => {
         return `
-                <li>
+                <li class="list">
                     <h4 class="song_name" id="${song.id}">Title: ${song.title}</h4> 
                     <button class="song_edit" id="${song.id}">Edit</button>
                     <button class="song_delete" id="${song.id}">Delete</button>
                 </li>
             `;
     }).join('')}
-    </ul>
+    </ol>
 
     <section class="songForm">
     <label>Add Song: </label><input type="text" id="songTitle" placeholder='Enter Song Title' />
@@ -20,6 +20,7 @@ export default function Songs(songs) {
     <br/>
     <label>Album: </label><select id="albums">
     </select>
+    <br/>
     <br/>
     <button id="saveSongButton">Add Song</button>
     </section>

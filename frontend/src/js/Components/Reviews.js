@@ -1,7 +1,7 @@
 export default function Reviews(reviews) {
     return `
-    <h1>List of reviews</h1>
-    <ul>
+    <h1 class="font-effect-fire">List of reviews</h1>
+    <ol>
         ${reviews.map(review => {
         return `
                 <li>
@@ -11,15 +11,16 @@ export default function Reviews(reviews) {
                 </li>
             `;
     }).join('')}
-    </ul>
+    </ol>
 
     <section class="reviewForm">
     <label>Add Review: </label><select id="albums">
     </select>
     <br/>
-    <label>Content: </label><input type="text" id="reviewContent" placeholder='Enter Review Here' />
+    <label>Content: </label><textarea id="reviewContent" rows="5" cols="30">Review Content....</textarea>
     <br/>
     <label>Name: </label><input type="text" id="reviewerName" placeholder='Enter Your Name' />
+    <br/>
     <br/>
     <button id="saveReviewButton">Add Review</button>
     </section>
