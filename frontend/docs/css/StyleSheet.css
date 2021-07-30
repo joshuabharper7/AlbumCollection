@@ -8,10 +8,7 @@ nav{
     list-style-type: none;
     text-shadow: 2px 2px #332020;
     font-size: 25px;
-    
-    
-  
-    
+   
     
 }
 nav:hover {
@@ -30,22 +27,119 @@ ul, li {
 }
 
 h1{
-    font-family: "Sofia", sans-serif;
+    font-family: 'Permanent Marker', cursive;
+    color:mistyrose;
     font-size: 40px;
-    text-shadow: 2px 2px #e9d6d6;
+    text-shadow: 4px 4px #0c0b0b;
     margin-left: 20px;
 }
 
 h4{
     color:ghostwhite;
-    font-family: "Apple Chancery", cursive;
+    font-family: 'Bebas Neue', cursive;
     font-weight: 900;
-    -webkit-text-stroke-width: .60px;
+    -webkit-text-stroke-width: .25px;
     -webkit-text-stroke-color: rgb(10, 9, 9);
-    font-size: 17px;
+    font-size: 30px;
+    margin-left: 20px;
+    text-shadow: 4px 4px #140404;
 }
 
 .footer{
     text-align: center;
     color: white;
+}
+
+.list{
+    margin-left: 20px;
+}
+
+button {
+    background-color: #9fdbee;
+    border-radius: 5px;
+}
+
+.reviewForm {
+    font-family: 'Bebas Neue', cursive;
+    color:#7cadcc;
+    -webkit-text-stroke-width: .20px;
+    -webkit-text-stroke-color: rgb(173, 166, 166);
+    font-size: 25px;
+    text-align: center;
+    text-shadow: 4px 4px #140404;
+}
+
+.songForm{
+    font-family: 'Bebas Neue', cursive;
+    color:#7cadcc;
+    -webkit-text-stroke-width: .75px;
+    -webkit-text-stroke-color: rgb(29, 28, 28);
+    font-size: 25px;
+    text-align: center;
+    text-shadow: 4px 4px #140404;
+}
+.artistForm{
+    font-family: 'Bebas Neue', cursive;
+    color:#7cadcc;
+    -webkit-text-stroke-width: .75px;
+    -webkit-text-stroke-color: rgb(29, 28, 28);
+    font-size: 25px;
+    text-align: center;
+    text-shadow: 4px 4px #140404;
+}
+.albumForm{
+    font-family: 'Bebas Neue', cursive;
+    color:#7cadcc;
+    -webkit-text-stroke-width: .90px;
+    -webkit-text-stroke-color: rgb(29, 28, 28);
+    font-size: 25px;
+    text-align: center;
+    text-shadow: 4px 4px #140404;
+}
+.artist_addAlbum{
+    font-family: 'Bebas Neue', cursive;
+    color:#7cadcc;
+    -webkit-text-stroke-width: .90px;
+    -webkit-text-stroke-color: rgb(29, 28, 28);
+    font-size: 25px;
+    text-align: center;
+    text-shadow: 4px 4px #140404; 
+}
+input, textarea, select{
+    border-radius: 5px;
+    border-color: rgb(184, 212, 22);
+    border-width: 2px;
+    border-style: groove;
+}
+.bottomList{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 25px;
+    color: white;
+    -webkit-text-stroke-width: .90px;
+    -webkit-text-stroke-color: rgb(29, 28, 28);
+    text-shadow: 4px 4px #140404;
+}
+.songName{
+    text-align: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 25px;
+    color: white;
+    -webkit-text-stroke-width: .90px;
+    -webkit-text-stroke-color: rgb(29, 28, 28);
+    text-shadow: 4px 4px #140404;
+     
+
+}
+.songInfo{
+    text-align: center;
+}
+.artistName{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 40px;
+    color: white;
+    -webkit-text-stroke-width: .90px;
+    -webkit-text-stroke-color: rgb(29, 28, 28);
+    text-shadow: 4px 4px #140404;
+    margin-left: 25px;
+    text-align: center;
 }

@@ -4,7 +4,7 @@ export default {
 
 function DisplaySong(song){
     return `
-        <h1><label><strong>Song Title: </strong></label>${song.title}</h1>
+        <h1><label><strong>Song Title: </strong><br/></label>${song.title}</h1>
         
         <h4><label>Song Duration: </label>${song.duration}</h4>
 

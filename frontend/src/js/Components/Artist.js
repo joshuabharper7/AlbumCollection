@@ -25,7 +25,7 @@ function DisplayArtist(artist){
             <button id="saveSongButton">Add Album</button>
         </section>
 
-        <ul>
+        <ul class="bottomList">
             ${artist.albums.map(album => {
                 return `
                     <li>
